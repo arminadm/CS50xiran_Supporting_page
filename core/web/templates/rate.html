@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/favicon.ico"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>فرم ثبت نظر پشتیبان های علمی</title>
+    <link rel="stylesheet" href="/static/style/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/vendor/bootstrap.min.css" type="text/css">
+</head>
+<body>
+
+<div id="app" class="row m-0">
+    <Cs50>
+        <h1 class="cs-title">فرم ثبت نظر پشتیبان های علمی</h1>
+        <form action="" id="rate_form">
+            <p class="cs-content" dir="rtl">
+                {% csrf_token %}
+                من
+                <input type="text" name="name" class="t1 cs1" maxlength="255" placeholder="نام و نام خانوادگی" required>
+                با ایمیل
+                <input type="email" name="email" class="t1 cs1" maxlength="255" placeholder="ایمیل" required>
+                و با شماره تلفن
+                <input type="tel" name="phone" class="t1 cs1" maxlength="15" minlength="10" placeholder="شماره تلفن" required>
+                از
+                <select class="form-select t2" name="discord_id" aria-label="پشتیبان" required>
+                    <option selected>...</option>
+                </select>
+                راضی
+                <select class="form-select t2" name="satisfaction" aria-label="پشتیبان" required>
+                    <option value="1" selected>هستم</option>
+                    <option value="2">نیستم</option>
+                </select>
+            </p>
+
+            <textarea placeholder="به دلیل" name="description" class="t3" required></textarea>
+
+            <input class="form-control t4" name="image" type="file" accept="image/*" id="formFileMultiple">
+
+            <button class="t5" type="button">ثبت</button>
+        </form>
+    </Cs50>
+
+    <Error class="d-none">
+        <span class="err_data"></span>
+    </Error>
+</div>
+</div>
+<script>
+    // document.addEventListener("DOMContentLoaded",()=>{const a=new XMLHttpRequest;let b="";a.onload=function(){const a=JSON.parse(this.responseText);b+="<option selected disabled hidden>\u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F</option>";for(let c=0;c<a.length;c++)b+=`<option value="${a[c]}">${a[c]}</option>`;document.querySelector("#app .cs-content select[name='discord_id']").innerHTML=b},a.open("GET",window.location.origin+"/static/ta.json"),a.send();const c=document.querySelector("#app .cs-content");document.querySelector("#app .t5").onclick=()=>{if(!document.getElementById("rate_form").checkValidity())document.getElementById("rate_form").reportValidity();else if("\u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F"===c.querySelector("select[name='discord_id']").value)document.getElementById("error").querySelector(".err_data").innerHTML="\u0644\u0637\u0641\u0627 TA \u0645\u0648\u0631\u062F \u0646\u0638\u0631 \u0631\u0627 \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F!",document.getElementById("error").classList.remove("d-none");else{const b=new FormData;let d;0===document.querySelector("#app input[name='image']").files.length?d=!0:3<document.querySelector("#app input[name='image']").files[0].size/1024/1024?(document.getElementById("error").querySelector(".err_data").innerHTML="\u062D\u062C\u0645 \u0641\u0627\u06CC\u0644 \u0627\u0631\u0633\u0627\u0644\u06CC \u0646\u0628\u0627\u06CC\u062F \u0628\u06CC\u0634\u062A\u0631 \u0627\u0632 300 \u0645\u06AF \u0628\u0627\u0634\u062F!",document.getElementById("error").classList.remove("d-none"),d=!1):(b.set("image_url",document.querySelector("#app input[name='image']").files[0]),d=!0),d&&(b.set("name",c.querySelector("input[name='name']").value),b.set("email",c.querySelector("input[name='email']").value),b.set("phone",c.querySelector("input[name='phone']").value),b.set("discord_id",c.querySelector("select[name='discord_id']").value),b.set("satisfaction",c.querySelector("select[name='satisfaction']").value),b.set("description",document.querySelector("#app textarea").value),b.set("csrfmiddlewaretoken",document.querySelector("#app input[name='csrfmiddlewaretoken']").value),a.onload=function(){const a=JSON.parse(this.responseText);a.success?(document.getElementById("error").querySelector(".err_data").innerHTML="\u0646\u0638\u0631 \u0634\u0645\u0627 \u0628\u0627 \u0645\u0648\u0642\u06CC\u062A \u062B\u0628\u062A \u0634\u062F!",document.getElementById("error").classList.remove("d-none")):(document.getElementById("error").querySelector(".err_data").innerHTML=this.responseText,document.getElementById("error").classList.remove("d-none"))},a.open("POST",window.location.origin+"/api/v1/submit_TA_survey/"),a.send(b))}}});
+    document.addEventListener("DOMContentLoaded",()=>{const a=new XMLHttpRequest;let b="";a.onload=function(){const a=JSON.parse(this.responseText);b+="<option selected disabled hidden>\u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F</option>";for(let c=0;c<a.length;c++)b+=`<option value="${a[c]}">${a[c]}</option>`;document.querySelector("#app .cs-content select[name='discord_id']").innerHTML=b},a.open("GET",window.location.origin+"/static/ta.json"),a.send();const c=document.querySelector("#app .cs-content");document.querySelector("#app .t5").onclick=()=>{if(!document.getElementById("rate_form").checkValidity())document.getElementById("rate_form").reportValidity();else if("\u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F"===c.querySelector("select[name='discord_id']").value)document.getElementById("error").querySelector(".err_data").innerHTML="\u0644\u0637\u0641\u0627 TA \u0645\u0648\u0631\u062F \u0646\u0638\u0631 \u0631\u0627 \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F!",document.getElementById("error").classList.remove("d-none");else{const b=new FormData;let d;0===document.querySelector("#app input[name='image']").files.length?d=!0:3<document.querySelector("#app input[name='image']").files[0].size/1024/1024?(document.getElementById("error").querySelector(".err_data").innerHTML="\u062D\u062C\u0645 \u0641\u0627\u06CC\u0644 \u0627\u0631\u0633\u0627\u0644\u06CC \u0646\u0628\u0627\u06CC\u062F \u0628\u06CC\u0634\u062A\u0631 \u0627\u0632 300 \u0645\u06AF \u0628\u0627\u0634\u062F!",document.getElementById("error").classList.remove("d-none"),d=!1):(b.set("image_url",document.querySelector("#app input[name='image']").files[0]),d=!0),d&&(b.set("name",c.querySelector("input[name='name']").value),b.set("email",c.querySelector("input[name='email']").value),b.set("phone",c.querySelector("input[name='phone']").value),b.set("discord_id",c.querySelector("select[name='discord_id']").value),b.set("satisfaction",c.querySelector("select[name='satisfaction']").value),b.set("description",document.querySelector("#app textarea").value),b.set("csrfmiddlewaretoken",document.querySelector("#app input[name='csrfmiddlewaretoken']").value),a.onload=function(){const a=JSON.parse(this.responseText);a.success?(document.getElementById("error").querySelector(".err_data").innerHTML="\u0646\u0638\u0631 \u0634\u0645\u0627 \u0628\u0627 \u0645\u0648\u0642\u06CC\u062A \u062B\u0628\u062A \u0634\u062F!",document.getElementById("error").classList.remove("d-none")):(document.getElementById("error").querySelector(".err_data").innerHTML=this.responseText,document.getElementById("error").classList.remove("d-none"))},a.open("POST","/api/v1/submit_TA_survey/"),a.send(b))}}});
+</script>
+<script src="/static/vendor/vue.global.js"></script>
+<script src="/static/vendor/bootstrap.bundle.min.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

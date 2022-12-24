@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/static/favicon.ico"/>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>فرم ثبت نام حضوری</title>
+  <link rel="stylesheet" href="/static/style/style.css" type="text/css">
+  <link rel="stylesheet" href="/static/vendor/bootstrap.min.css" type="text/css">
+</head>
+<body>
+
+<div id="app" class="row m-0">
+  <Cs50>
+    <h1 class="cs-title" dir="rtl">
+      فرم ثبت نام حضوری هفته پنجم
+      <br>
+      <span>{{ capacity }} نفر باقی مانده</span>
+    </h1>
+
+    <form class="rp-content text-center" method="post" action="/class-attend">
+        {% csrf_token %}
+      <input type="text" class="t1" maxlength="255" name="name" placeholder="نام و نام خانوادگی">
+      <input type="email" class="t1" maxlength="255" name="email" placeholder="ایمیل">
+      <input type="tel" class="t1" maxlength="35" name="phone" placeholder="شماره تلفن">
+
+      <button class="t5">ثبت درخواست حضور</button>
+    </form>
+  </Cs50>
+
+    <Error class="d-none">
+        {{ detail }}
+    </Error>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const d = {{ capacity | safe }} ;
+    if (d <= 0) document.querySelector("#app .rp-content .t5").disabled = true
+
+    const p = {% if detail %} "{{ detail | safe }}" {% else %} null {% endif %}
+    if (p !== null) document.getElementById("error").classList.remove("d-none")
+})
+</script>
+<script src="/static/vendor/vue.global.js"></script>
+<script src="/static/vendor/bootstrap.bundle.min.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

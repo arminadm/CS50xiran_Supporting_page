@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <link rel="icon" href="/static/favicon.ico"/>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>بلیت حضوری تون رو گم کردید؟</title>
+  <link rel="stylesheet" href="/static/style/style.css" type="text/css">
+  <link rel="stylesheet" href="/static/vendor/bootstrap.min.css" type="text/css">
+</head>
+<body>
+
+<div id="app" class="row m-0">
+  <Cs50>
+    <h1 class="cs-title">بلیت حضوری تون رو گم کردید؟</h1>
+
+    <form class="rp-content text-center" method="post" action="/find-ticket">
+        {% csrf_token %}
+      <input type="tel" class="t1" maxlength="35" name="phone" placeholder="شماره تلفن">
+
+      <button class="t5">پیدا کردن بلیت</button>
+    </form>
+  </Cs50>
+
+    <Error class="d-none">
+        {{ detail }}
+    </Error>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const p = {% if detail %} "{{ detail | safe }}" {% else %} null {% endif %}
+    if (p !== null) document.getElementById("error").classList.remove("d-none")
+})
+</script>
+<script src="/static/vendor/vue.global.js"></script>
+<script src="/static/vendor/bootstrap.bundle.min.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>
